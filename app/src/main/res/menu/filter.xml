@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_Cart"
+        android:orderInCategory="100"
+        android:icon="@mipmap/cart"
+        android:title="@string/action_cart"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_filter"
+        android:orderInCategory="100"
+        android:icon="@mipmap/filter"
+        android:title="action_filter"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_price"
+        android:orderInCategory="100"
+        android:title="SortByPrice"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_name"
+        android:orderInCategory="100"
+        android:title="SortByName"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_default"
+        android:orderInCategory="100"
+        android:title="Default"
+        app:showAsAction="never" />
+    <!--<item-->
+        <!--android:id="@+id/action_single"-->
+        <!--android:orderInCategory="100"-->
+        <!--android:icon="@mipmap/dashboard"-->
+        <!--android:title="List"-->
+        <!--app:showAsAction="always" />-->
+</menu>
