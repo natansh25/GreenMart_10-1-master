@@ -25,6 +25,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.stetho.Stetho;
 import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
@@ -94,6 +95,7 @@ public class MainActivity extends AppCompatActivity
         android.support.v4.view.ViewPager viewPager = (android.support.v4.view.ViewPager) findViewById(R.id.viewpager);
         SimpleFragmentPageAdapter adapter = new SimpleFragmentPageAdapter(this, getSupportFragmentManager());
         mProgressBar=findViewById(R.id.progress_bar);
+        Stetho.initializeWithDefaults(this);
 
         //to remove title from toolbar
         getSupportActionBar().setDisplayShowTitleEnabled(false);

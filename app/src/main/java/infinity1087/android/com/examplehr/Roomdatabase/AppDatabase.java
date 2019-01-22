@@ -6,8 +6,9 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
 import infinity1087.android.com.examplehr.ProductDetailModel.Pz;
+import infinity1087.android.com.examplehr.ProductDetailModel.RoomModel;
 
-@Database(entities = {Pz.class}, version = 1)
+@Database(entities = {RoomModel.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase INSTANCE;
@@ -22,7 +23,7 @@ public abstract class AppDatabase extends RoomDatabase {
 
                     // Create Database here
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            AppDatabase.class, "movie_database")
+                            AppDatabase.class, "grossary_database")
                             .allowMainThreadQueries()
                             .fallbackToDestructiveMigration()
                             .build();

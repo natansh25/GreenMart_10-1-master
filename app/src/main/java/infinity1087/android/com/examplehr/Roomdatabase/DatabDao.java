@@ -8,22 +8,24 @@ import android.arch.persistence.room.Query;
 import java.util.List;
 
 import infinity1087.android.com.examplehr.ProductDetailModel.Pz;
+import infinity1087.android.com.examplehr.ProductDetailModel.ResponseDetail;
+import infinity1087.android.com.examplehr.ProductDetailModel.RoomModel;
 
 @Dao
 public interface DatabDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Pz result);
+    void insert(RoomModel result);
 
 //    @Query("SELECT * FROM movie_table")
 //    LiveData<List<Pz>> getProductName();
 //
 //    @Query("SELECT * FROM movie_table")
 //    LiveData<List<Pz>> getOfferText() ;
-    @Query("SELECT * from movie_table ORDER BY productName ASC")
-    List<Pz> getAllname();
+    @Query("SELECT * from Grossary_table ORDER BY productName ASC")
+    List<RoomModel> getAllname();
 
-    @Query("SELECT * from movie_table ORDER BY offerText ASC")
-    List<Pz> getAllOfferprice();
+   /* @Query("SELECT * from movie_table ORDER BY offerText ASC")
+    List<Pz> getAllOfferprice();*/
 
 }

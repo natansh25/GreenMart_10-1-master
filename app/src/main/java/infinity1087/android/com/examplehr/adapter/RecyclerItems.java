@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
@@ -35,14 +36,28 @@ public class RecyclerItems extends RecyclerView.Adapter<RecyclerItems.MyViewHold
     List<PriceDetails> mPricel;
     List<ResponseDetail> mDataFiltered;
     List<PriceDetails> mPricelFiltered;
+    private AddToCartItemClickListner mOnClickListener;
     Context mContext;
+    String  price;
+    String image;
+
+
+    public interface AddToCartItemClickListner {
+        void onListItemClick(ResponseDetail responseDetail,String price);
+        //void onButtonClick(int position);
+    }
 
     public RecyclerItems(List<ResponseDetail> data, List<ResponseDetail> dataFiltered, DetailLayout context) {
 
         this.mData = data;
         mDataFiltered = dataFiltered;
-        mContext=context;
+        mContext = context;
 
+    }
+
+    public void setOnItemCliackListner(AddToCartItemClickListner onClickListener)
+    {
+        this.mOnClickListener=onClickListener;
     }
 
     @NonNull
@@ -69,7 +84,7 @@ public class RecyclerItems extends RecyclerView.Adapter<RecyclerItems.MyViewHold
         for (i = 0; i < size; i++) {
 
             PriceDetails details2 = datum.getPriceDetail().get(i);
-            mList.add(String.valueOf(details2.getPP().getWeight() + " " + details2.getPU().getUnitName()+" - "+details2.getPP().getSellCost()+"₹"));
+            mList.add(String.valueOf(details2.getPP().getWeight() + " " + details2.getPU().getUnitName() + " - " + details2.getPP().getSellCost() + "₹"));
 
         }
 
@@ -77,6 +92,7 @@ public class RecyclerItems extends RecyclerView.Adapter<RecyclerItems.MyViewHold
 
         myViewHolder.niceSpinner.attachDataSource(mList);
         myViewHolder.niceSpinner.setSelectedIndex(0);
+        price= String.valueOf(myViewHolder.niceSpinner.getSelectedIndex());
         myViewHolder.txt_name.setText(datum.getP().getProductName());
         myViewHolder.txt_price.setText(String.valueOf(details.getPP().getBasicCost()) + "₹");
         myViewHolder.txt_offer.setText(String.valueOf(details.getPP().getCheckeredCost()) + "₹");
@@ -92,6 +108,7 @@ public class RecyclerItems extends RecyclerView.Adapter<RecyclerItems.MyViewHold
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
                 PriceDetails details3 = datum.getPriceDetail().get(i);
+                price=String.valueOf(details3.getPP().getBasicCost());
                 myViewHolder.txt_price.setText(String.valueOf(details3.getPP().getBasicCost()) + "₹");
                 myViewHolder.txt_offer.setText(String.valueOf(details3.getPP().getCheckeredCost()) + "₹");
 
@@ -141,9 +158,10 @@ public class RecyclerItems extends RecyclerView.Adapter<RecyclerItems.MyViewHold
         };
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView txt_name, txt_price, txt_offer;
+        Button btn_add_to_cart;
         ImageView imageView;
         NiceSpinner niceSpinner;
 
@@ -156,6 +174,20 @@ public class RecyclerItems extends RecyclerView.Adapter<RecyclerItems.MyViewHold
             txt_price = itemView.findViewById(R.id.txt_detail_amount);
             txt_offer = itemView.findViewById(R.id.txt_offer);
             niceSpinner = itemView.findViewById(R.id.spinner);
+            btn_add_to_cart = itemView.findViewById(R.id.btn_addToCart);
+            btn_add_to_cart.setOnClickListener(this);
+
+
+        }
+
+        @Override
+        public void onClick(View view) {
+            if(view==btn_add_to_cart)
+            {
+                final ResponseDetail datum = mDataFiltered.get(getAdapterPosition());
+                mOnClickListener.onListItemClick(datum,price);
+
+            }
 
         }
     }

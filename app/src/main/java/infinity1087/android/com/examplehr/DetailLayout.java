@@ -26,16 +26,25 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import infinity1087.android.com.examplehr.NavigationScreens.HelpActivity;
 import infinity1087.android.com.examplehr.NavigationScreens.MyAccount;
 import infinity1087.android.com.examplehr.NavigationScreens.SettingsActivity;
+import infinity1087.android.com.examplehr.ProductDetailModel.PriceDetails;
+import infinity1087.android.com.examplehr.ProductDetailModel.RoomModel;
+import infinity1087.android.com.examplehr.Roomdatabase.AppDatabase;
+import infinity1087.android.com.examplehr.RoundedTransformation.RoundedTransformation;
 import infinity1087.android.com.examplehr.adapter.RecyclerItems;
 import infinity1087.android.com.examplehr.ProductDetailModel.ResponseDetail;
+import infinity1087.android.com.examplehr.appExecuter.AppExecutors;
 
-public class DetailLayout extends AppCompatActivity implements AdapterView.OnItemSelectedListener, NavigationView.OnNavigationItemSelectedListener {
+public class DetailLayout extends AppCompatActivity implements AdapterView.OnItemSelectedListener, NavigationView.OnNavigationItemSelectedListener, RecyclerItems.AddToCartItemClickListner {
 
     private RecyclerView mRecyclerView;
     private RecyclerItems mAdapter;
@@ -45,6 +54,7 @@ public class DetailLayout extends AppCompatActivity implements AdapterView.OnIte
     private TextView txt_total, txt_pname, txt_price;
     private double itemamount = 0;
     private double itemquantity = 0;
+    private AppDatabase mDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +82,10 @@ public class DetailLayout extends AppCompatActivity implements AdapterView.OnIte
 
         @SuppressLint("ResourceType") ArrayAdapter<String> dataA = new ArrayAdapter<String>(this, R.id.spinner);
         mAdapter = new RecyclerItems(mData, mData, this);
+        mAdapter.setOnItemCliackListner(this);
         setUpRecyclerView(mData);
         navigationView.setNavigationItemSelectedListener(this);
+        mDb = AppDatabase.getDatabase(getApplicationContext());
 
     }
 
@@ -158,15 +170,9 @@ public class DetailLayout extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
-    }
-
-    public void btnAddtoCart(View view) {
-
-        // TODO Add product to cart
-        Intent i = new Intent(DetailLayout.this, MyCart.class);
-        startActivity(i);
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -260,4 +266,77 @@ public class DetailLayout extends AppCompatActivity implements AdapterView.OnIte
         return false;
     }
 
+    @Override
+    public void onListItemClick(ResponseDetail responseDetail, String price) {
+
+
+        //TODO read below
+        //on clicking the add button i have saved the data into room database you can see it using setho
+        //in the cart activity just setup a recycler view
+        //make a new adpter and in the cart activity using AppExecuter get all the list
+        //of products saved as list call the query look some room examples if you dont get this.
+        //and just pass this to the recycler view
+        // i have done little code for getting the list in cart activity just submit this list to recyclerview
+        //and lastly put myCart activity intent on the cart icon 
+
+
+        final RoomModel model=new RoomModel();
+        model.setName(responseDetail.getP().getProductName());
+        model.setPrice(price);
+        String image="http://image.barodaweb.net/api/EGreen/Magic/270/Product-" + responseDetail.getP().getProductId() + "/" + responseDetail.getP().getProductImage() + "/100";
+        model.setImage(image);
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                mDb.movieDao().insert(model);
+            }
+        });
+
+
+        Toast.makeText(this, "hulaaa", Toast.LENGTH_SHORT).show();
+       /* Intent i = new Intent(this, MyCart.class);
+        startActivity(i);*/
+
+
+        //PriceDetails details = responseDetail.getPriceDetail().get(0);
+/*
+        final List<String> mList = new ArrayList<>();
+
+        //mList.clear();
+        for (i = 0; i < size; i++) {
+
+            PriceDetails details2 = datum.getPriceDetail().get(i);
+            mList.add(String.valueOf(details2.getPP().getWeight() + " " + details2.getPU().getUnitName() + " - " + details2.getPP().getSellCost() + "₹"));
+
+        }
+
+        Log.d("oal", String.valueOf(Arrays.asList(mList)));
+
+
+
+
+        myViewHolder.txt_name.setText(responseDetail.getP().getProductName());
+        myViewHolder.txt_price.setText(String.valueOf(details.getPP().getBasicCost()) + "₹");
+        myViewHolder.txt_offer.setText(String.valueOf(details.getPP().getCheckeredCost()) + "₹");
+
+        Picasso.get()
+                .load(t)
+                .transform(new RoundedTransformation(20, 0))
+                .into(myViewHolder.imageView);
+
+        myViewHolder.niceSpinner.addOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                PriceDetails details3 = datum.getPriceDetail().get(i);
+                price=String.valueOf(details3.getPP().getBasicCost());
+                myViewHolder.txt_price.setText(String.valueOf(details3.getPP().getBasicCost()) + "₹");
+                myViewHolder.txt_offer.setText(String.valueOf(details3.getPP().getCheckeredCost()) + "₹");
+
+            }
+        });*/
+
+
+    }
 }
