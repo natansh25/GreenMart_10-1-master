@@ -251,6 +251,14 @@ public class MainActivity extends AppCompatActivity
 
             return true;
         }
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_Cart) {
+
+            Intent i=new Intent(this,MyCart.class);
+            startActivity(i);
+
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }

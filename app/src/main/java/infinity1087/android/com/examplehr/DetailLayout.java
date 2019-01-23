@@ -270,14 +270,7 @@ public class DetailLayout extends AppCompatActivity implements AdapterView.OnIte
     public void onListItemClick(ResponseDetail responseDetail, String price) {
 
 
-        //TODO read below
-        //on clicking the add button i have saved the data into room database you can see it using setho
-        //in the cart activity just setup a recycler view
-        //make a new adpter and in the cart activity using AppExecuter get all the list
-        //of products saved as list call the query look some room examples if you dont get this.
-        //and just pass this to the recycler view
-        // i have done little code for getting the list in cart activity just submit this list to recyclerview
-        //and lastly put myCart activity intent on the cart icon 
+
 
 
         final RoomModel model=new RoomModel();
