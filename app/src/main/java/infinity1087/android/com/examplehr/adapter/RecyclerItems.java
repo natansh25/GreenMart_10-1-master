@@ -92,7 +92,7 @@ public class RecyclerItems extends RecyclerView.Adapter<RecyclerItems.MyViewHold
 
         myViewHolder.niceSpinner.attachDataSource(mList);
         myViewHolder.niceSpinner.setSelectedIndex(0);
-        price= String.valueOf(myViewHolder.niceSpinner.getSelectedIndex());
+        price= String.valueOf(String.valueOf(details.getPP().getBasicCost()) + "₹");
         myViewHolder.txt_name.setText(datum.getP().getProductName());
         myViewHolder.txt_price.setText(String.valueOf(details.getPP().getBasicCost()) + "₹");
         myViewHolder.txt_offer.setText(String.valueOf(details.getPP().getCheckeredCost()) + "₹");

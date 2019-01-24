@@ -27,7 +27,7 @@ public class MyCart extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_cart);
+        setContentView(R.layout.activity_cart_trail);
         mDb = AppDatabase.getDatabase(getApplicationContext());
         mRecyclerView = findViewById(R.id.recycler_view_cart);
 
@@ -36,6 +36,7 @@ public class MyCart extends AppCompatActivity {
             public void run() {
                 mRoomModels = mDb.movieDao().getAllname();
                 Log.d("carty", String.valueOf(mRoomModels.get(0)));
+                setUpRecyclerVIew(mRoomModels);
 
             }
         });
@@ -45,10 +46,15 @@ public class MyCart extends AppCompatActivity {
         //cart is not made clickabe in detailview so do that passs Mycart intent on detailactivity also
 
 
-        RecyclerView.LayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+
+
+    }
+
+    private void setUpRecyclerVIew(List<RoomModel> roomModels) {
+        RecyclerView.LayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(manager);
 
-        mCart = new RecyclerCart(mRoomModels);
+        mCart = new RecyclerCart(roomModels);
         mRecyclerView.setAdapter(mCart);
 
 
