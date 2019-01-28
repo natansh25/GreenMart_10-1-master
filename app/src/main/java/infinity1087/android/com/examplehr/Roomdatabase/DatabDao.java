@@ -1,6 +1,7 @@
 package infinity1087.android.com.examplehr.Roomdatabase;
 
 import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
@@ -16,6 +17,9 @@ public interface DatabDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(RoomModel result);
+
+    @Delete
+    void delete(RoomModel roomModel);
 
 //    @Query("SELECT * FROM movie_table")
 //    LiveData<List<Pz>> getProductName();

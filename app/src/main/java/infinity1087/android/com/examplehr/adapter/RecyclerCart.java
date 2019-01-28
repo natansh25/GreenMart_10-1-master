@@ -39,6 +39,7 @@ public class RecyclerCart extends RecyclerView.Adapter<RecyclerCart.MyViewHolder
         myViewHolder.txt_weight.setText(roomModel.getPrice());
         Picasso.get().load(roomModel.getImage()).error(R.drawable.ic_launcher_background).fit().into(myViewHolder.img);
         Log.d("tagu",roomModel.getImage());
+        myViewHolder.itemView.setTag(roomModel);
 
     }
 
